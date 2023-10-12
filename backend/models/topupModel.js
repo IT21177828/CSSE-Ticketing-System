@@ -1,6 +1,6 @@
 import mongoose from "../db/conn.js";
 
-const user = new mongoose.Schema({
+const topup = new mongoose.Schema({
   firstName: {
     type: String,
     required: true,
@@ -30,9 +30,9 @@ const user = new mongoose.Schema({
     type: String,
     required: true,
   },
-  accountBalance: {
-    type: Number,
-    default: 0,
+  userRole: {
+    type: [String],
+    required: true,
   },
 });
-export default user;
+export default topup;

@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 
 dotenv.config();
 
+//connection to mongodb
 mongoose.connect(process.env.ATLAS_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
