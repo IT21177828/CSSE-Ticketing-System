@@ -1,0 +1,22 @@
+###
+
+POST http://localhost:5050/users/login
+Content-Type: application/json
+
+{
+    "email" : "admin@gmail.com",
+    "password" :  "0000"
+}
+
+###
+GET http://localhost:5050/users/checkage
+
+###
+POST http://localhost:5050/users/showName
+Content-Type: header
+Authorization : Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTY5NzE0MTY0OCwiZXhwIjoxNjk3MTQyNzI4fQ.xZUYTM_M7K9WTKPaUfvLx6Z66IQt6LmxXulVggifHXE
+
+###
+POST http://localhost:5050/users/refresh
+Content-Type: header
+Authorization : Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTY5NzE0MTY0OCwiZXhwIjoxNjk3MTQyNzI4fQ.xZUYTM_M7K9WTKPaUfvLx6Z66IQt6LmxXulVggifHXE
