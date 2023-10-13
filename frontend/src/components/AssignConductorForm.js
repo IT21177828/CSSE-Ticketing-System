@@ -46,7 +46,7 @@ const AssignConductorForm = () => {
       setShowConductorList(false);
       setShowBusList(false);
       setIsAssigning(false);
-    }, 3000); // Simulating a 3-second delay for the assignment process
+    }, 2000); // Simulating a 2-second delay for the assignment process
   };
 
   const selectConductor = (name) => {
@@ -86,7 +86,7 @@ const AssignConductorForm = () => {
                 .map((name) => (
                   <li
                     key={name}
-                    className="cursor-pointer hover:bg-blue-200 p-1"
+                    className="cursor-pointer hover-bg-blue-200 p-1"
                     onClick={() => selectConductor(name)}
                   >
                     {name}
@@ -129,27 +129,31 @@ const AssignConductorForm = () => {
           )}
         </div>
         <div className="flex items-center justify-center">
-        <button
-  className={`${
-    isAssigning
-      ? "bg-blue-500 text-white cursor-not-allowed" // Change bg-red-500 to your desired color
-      : "bg-blue-500 hover:bg-blue-700 text-white"
-  } font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
-  type="button"
-  onClick={handleAssign}
-  disabled={isAssigning}
->
-  {isAssigning ? (
-    <svg
-      className="animate-spin h-5 w-5 mr-3 inline-block"
-      viewBox="0 0 24 24"
-    >
-      {/* Add your SVG animation content here */}
-    </svg>
-  ) : null}
-  {isAssigning ? "Assigning..." : "Assign"}
-</button>
-
+          <button
+            className={`${
+              isAssigning
+                ? "bg-green-500 text-white cursor-not-allowed"
+                : "bg-blue-500 hover:bg-blue-700 text-white"
+            } font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+            type="button"
+            onClick={handleAssign}
+            disabled={isAssigning}
+          >
+            {isAssigning ? (
+              <svg
+                className="animate-spin h-5 w-5 mr-3 inline-block"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+              </svg>
+            ) : null}
+            {isAssigning ? "Assigning..." : "Assign"}
+          </button>
         </div>
       </form>
     </div>
