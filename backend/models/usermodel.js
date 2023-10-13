@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import mongoose from "../db/conn.js";
 
 const user = new mongoose.Schema({
@@ -29,6 +30,14 @@ const user = new mongoose.Schema({
   address: {
     type: String,
     required: true,
+  },
+  userRole: {
+    type: [String],
+    required: true,
+  },
+  qrCode: {
+    type: String,
+    default: null,
   },
   accountBalance: {
     type: Number,
