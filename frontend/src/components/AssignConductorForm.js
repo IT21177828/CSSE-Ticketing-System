@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const AssignConductorForm = () => {
   const [conductorName, setConductorName] = useState("");
   const [busNumber, setBusNumber] = useState("");
   const [showConductorList, setShowConductorList] = useState(false);
   const [showBusList, setShowBusList] = useState(false);
+  const [isAssigning, setIsAssigning] = useState(false);
 
   // Sample hardcoded conductor names and bus numbers
   const sampleConductorNames = [
@@ -35,13 +36,17 @@ const AssignConductorForm = () => {
   };
 
   const handleAssign = () => {
-    // Handle the assignment logic here, such as sending the data to a server.
-    // You can use 'conductorName' and 'busNumber' for the selected values.
-    // After assigning, you can reset the form and hide the lists.
-    setConductorName("");
-    setBusNumber("");
-    setShowConductorList(false);
-    setShowBusList(false);
+    // Simulate loading for a few seconds
+    setIsAssigning(true);
+    setTimeout(() => {
+      // Handle the assignment logic here
+      // After assignment is complete, reset the form and hide the lists
+      setConductorName("");
+      setBusNumber("");
+      setShowConductorList(false);
+      setShowBusList(false);
+      setIsAssigning(false);
+    }, 3000); // Simulating a 3-second delay for the assignment process
   };
 
   const selectConductor = (name) => {
@@ -55,7 +60,7 @@ const AssignConductorForm = () => {
   };
 
   return (
-    <div className="w-full max-w-xs mx-auto mt-40">
+    <div className="w-full max-w-md mx-auto mt-60">
       <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label
@@ -114,7 +119,7 @@ const AssignConductorForm = () => {
                 .map((number) => (
                   <li
                     key={number}
-                    className="cursor-pointer hover:bg-blue-200 p-1"
+                    className="cursor-pointer hover-bg-blue-200 p-1"
                     onClick={() => selectBus(number)}
                   >
                     {number}
@@ -124,13 +129,27 @@ const AssignConductorForm = () => {
           )}
         </div>
         <div className="flex items-center justify-center">
-          <button
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-            type="button"
-            onClick={handleAssign}
-          >
-            Assign
-          </button>
+        <button
+  className={`${
+    isAssigning
+      ? "bg-blue-500 text-white cursor-not-allowed" // Change bg-red-500 to your desired color
+      : "bg-blue-500 hover:bg-blue-700 text-white"
+  } font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline`}
+  type="button"
+  onClick={handleAssign}
+  disabled={isAssigning}
+>
+  {isAssigning ? (
+    <svg
+      className="animate-spin h-5 w-5 mr-3 inline-block"
+      viewBox="0 0 24 24"
+    >
+      {/* Add your SVG animation content here */}
+    </svg>
+  ) : null}
+  {isAssigning ? "Assigning..." : "Assign"}
+</button>
+
         </div>
       </form>
     </div>
