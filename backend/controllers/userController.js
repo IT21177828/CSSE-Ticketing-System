@@ -1,3 +1,4 @@
+import busConductorSchema from "../models/busConductor.js";
 import mongoose from "../db/conn.js";
 import userSchema from "../models/usermodel.js";
 import crypto from "crypto";
@@ -13,6 +14,10 @@ const transporter = nodemailer.createTransport({
 });
 
 export const userModel = mongoose.model("user", userSchema);
+export const busConductorModel = mongoose.model(
+  "busConductor",
+  busConductorSchema
+);
 
 export function hashPasswordNew(password) {
   return crypto
@@ -92,15 +97,19 @@ export function adminAccount(req, res) {
 // login user
 
 const generateAccessToken = (user) => {
-  console.log(user)
+  console.log(user);
   return jwt.sign({ email: user.email, name: user.firstName }, "secret_key", {
     expiresIn: "18m",
   });
 };
 const generateRefreshToken = (user) => {
-  return jwt.sign({ email: user.email, name: user.firstName }, "refresh_secret_key", {
-    expiresIn: "18m",
-  });
+  return jwt.sign(
+    { email: user.email, name: user.firstName },
+    "refresh_secret_key",
+    {
+      expiresIn: "18m",
+    }
+  );
 };
 
 const loginUser = (req, res) => {
@@ -236,7 +245,7 @@ const refresh = (req, res) => {
 };
 
 const showName = (req, res) => {
-  console.log("auth work"+req.body.name);
+  console.log("auth work" + req.body.name);
   if (req.user.id === req.params.id || req.user.isAdmin) {
     console.log("admin or user");
   }
@@ -248,10 +257,76 @@ export function updateUser(req, res) {
     req.body;
 }
 
+const assignUserRole = (req, res) => {
+  const { email, userRole } = req.body;
+
+  try {
+    userModel
+      .findOne({ email: email })
+      .then((user) => {
+        if (!user) {
+          return res.send({ message: "User not found" });
+        }
+
+        // Check if the user already has the role
+        if (user.userRole.includes(userRole)) {
+          return res.send({ message: "User already has the assigned role" });
+        }
+
+        if (userRole == "conductor") {
+          const conductor = new busConductorModel();
+          conductor.userID = user._id;
+          conductor.busNumber = null;
+          conductor
+            .save()
+            .then((result) => {
+              console.log("Conductor added successfully");
+            })
+            .catch((err) => {
+              res.send({
+                message: "Error while adding conductor",
+                error: err,
+              });
+              throw err;
+            });
+        }
+
+        userModel
+          .updateOne({ email: email }, { $push: { userRole: userRole } })
+          .then((result) => {
+            if (result.modifiedCount == 0) {
+              res.send("User not updated");
+            } else {
+              console.log("User role assigned successfully");
+              res.send("User role assigned successfully");
+            }
+          })
+          .catch((err) => {
+            res.send({
+              message: "Error while assigning user role",
+              error: err,
+            });
+          });
+      })
+      .catch((err) => {
+        res.send({
+          message: "Error while finding user",
+          error: err,
+        });
+      });
+  } catch (err) {
+    res.send({
+      message: "Error while assigning user role",
+      error: err,
+    });
+  }
+};
+
 export default {
   verify,
   refresh,
   showName,
   loginUser,
   userDetails,
+  assignUserRole,
 };
