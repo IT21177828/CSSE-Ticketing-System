@@ -11,17 +11,13 @@ const bus = new mongoose.Schema({
   },
   driverId: {
     type: String,
-    required: true,
+    default: null,
   },
   conductId: {
     type: String,
-    required: true,
+    default: null,
   },
-  routeStart: {
-    type: String,
-    required: true,
-  },
-  routeEnd: {
+  routeName: {
     type: String,
     required: true,
   },

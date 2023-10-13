@@ -32,12 +32,11 @@ POST http://localhost:5050/bus/
 Content-Type: application/json
 
 {
-     "busNumber":"ND-5689",
-      "driverId":"Drive003",
-      "conductId":"ConID003",
-      "capacity":50,
-      "routeStart":"Gall",
-      "routeEnd":"Kaduwela"
+    "busNumber":"JL-8289",
+    "driverId": null,
+    "conductId": null,
+    "capacity":50,
+    "routeName":"Gall to Hambarana"
 }
 
 ###
