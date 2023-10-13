@@ -33,6 +33,7 @@ export function registerUser(req, res) {
   newUser.gender = gender;
   newUser.age = age;
   newUser.address = address;
+  newUser.userRole = ["user"];
 
   newUser
     .save()
@@ -73,7 +74,8 @@ export function adminAccount(req, res) {
   newUser.passwordHash = hashPasswordNew("0000");
   newUser.gender = "---";
   newUser.age = 12;
-  newUser.address = "admin";
+  newUser.address = "admin address";
+  newUser.userRole = ["admin"];
 
   newUser
     .save()
