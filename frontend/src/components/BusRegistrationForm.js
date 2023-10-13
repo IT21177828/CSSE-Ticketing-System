@@ -6,8 +6,10 @@ const BusRegistrationForm = () => {
     busName: "",
     busNumber: "",
     capacity: "",
+
     busRoute: "", // Set a default value
     rootDistance: "", // New field for root distance
+
   });
 
   const [error, setError] = useState("");

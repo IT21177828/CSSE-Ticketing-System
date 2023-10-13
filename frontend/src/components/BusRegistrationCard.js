@@ -1,9 +1,11 @@
 import React from 'react';
 
+
 const BusRegistrationCard = (props) => {
   // Sample bus registration data
   console.log({props})
   const {busName, busNumber, capacity, busRoute, rootDistance} = props;
+
 
 
   return (
