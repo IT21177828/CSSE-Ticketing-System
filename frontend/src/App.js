@@ -4,6 +4,7 @@ import SignIn from './pages/SignIn';
 import Registration from './pages/Registration';
 import BusRegistrationForm from './components/BusRegistrationForm';
 import Dashboard from './components/Dashboard/Dashboard';
+import ManagerDashboard from './components/ManagerDashboard/ManagerDashboard';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/bus" element={<BusRegistrationForm />} />
         <Route path="/admin" element={<Dashboard />} />
+        <Route path="/manager" element={<ManagerDashboard />} />
       </Routes>
     </Router>
   );
