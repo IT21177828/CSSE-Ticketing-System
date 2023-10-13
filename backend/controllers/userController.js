@@ -27,7 +27,7 @@ export function hashPasswordNew(password) {
 //add new user
 
 export function registerUser(req, res) {
-  const { firstName, lastName, email, passwordHash, gender, age, address } =
+  const { firstName, lastName, email, passwordHash, gender, age, address,contactNo } =
     req.body;
 
   let newUser = new userModel();
@@ -39,6 +39,7 @@ export function registerUser(req, res) {
   newUser.age = age;
   newUser.address = address;
   newUser.userRole = ["user"];
+  newUser.contactNo = contactNo;
 
   newUser
     .save()
@@ -123,7 +124,7 @@ const loginUser = (req, res) => {
         // check if the user is admin
         if (
           user.email === "admin@gmail.com" &&
-          user.passwordHash === hashPasswordNew("0000")
+          user.passwordHash === hashPasswordNew(passwordHash)
         ) {
           const A_token = generateAccessToken(user);
           const R_token = generateRefreshToken(user);

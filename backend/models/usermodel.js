@@ -21,15 +21,15 @@ const user = new mongoose.Schema({
   },
   gender: {
     type: String,
-    required: true,
+    default: null,
   },
   age: {
     type: Number,
-    required: true,
+    default: null,
   },
   address: {
     type: String,
-    required: true,
+    default: null,
   },
   userRole: {
     type: [String],
@@ -42,6 +42,10 @@ const user = new mongoose.Schema({
   accountBalance: {
     type: Number,
     default: 0,
+  },
+  contactNo: {
+    type: String,
+    default: null,
   },
 });
 export default user;

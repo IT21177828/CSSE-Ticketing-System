@@ -1,6 +1,10 @@
 import mongoose from "../db/conn.js";
 
 const bus = new mongoose.Schema({
+  busName: {
+    type: String,
+    required: true,
+  },
   busNumber: {
     type: String,
     required: true,
@@ -19,6 +23,10 @@ const bus = new mongoose.Schema({
   },
   routeName: {
     type: String,
+    required: true,
+  },
+  rootDistance: {
+    type: Number,
     required: true,
   },
 });

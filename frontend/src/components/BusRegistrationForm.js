@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import axios from "axios";
 
 const BusRegistrationForm = () => {
   const [formData, setFormData] = useState({
-    busName: '',
-    busNumber: '',
-    capacity: '',
-    busRoute: '',
-    conductorName: '',
-    rootDistance: '', // New field for root distance
+    busName: "",
+    busNumber: "",
+    capacity: "",
+    busRoute: "",
+    conductorName: "",
+    rootDistance: "", // New field for root distance
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,11 +24,24 @@ const BusRegistrationForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Here, you can perform registration logic, such as sending the data to a server for processing.
-    // If registration is successful, you can redirect the user to another page. If there's an error, set the error state.
+    const busData = {
+      busName: formData.busName,
+      busNumber: formData.busNumber,
+      driverId: null,
+      conductId: null,
+      capacity: parseInt(formData.capacity),
+      routeName: formData.busRoute,
+      rootDistance: parseInt(formData.rootDistance),
+    };
 
-    // Example: Simulating a registration error
-    setError('Registration failed. Please try again.');
+    axios.post("http://localhost:5050/bus", formData).then((res) => {
+      console.log(res);
+      if (res.data.message === "Bus created successfully") {
+        window.location.href = "/card";
+      } else {
+        setError(res.data);
+      }
+    });
   };
 
   return (
@@ -35,7 +49,7 @@ const BusRegistrationForm = () => {
       className="min-h-screen flex items-center justify-center"
       style={{
         background: `url(https://cdn.pixabay.com/photo/2017/11/08/00/33/london-2928889_1280.jpg) no-repeat center center fixed`,
-        backgroundSize: 'cover',
+        backgroundSize: "cover",
       }}
     >
       <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg mt-40 mb-12">
@@ -46,10 +60,15 @@ const BusRegistrationForm = () => {
             className="w-40 h-30"
           />
         </div>
-        <h1 className="text-2xl font-semibold text-center text-gray-500 mt-6 mb-6">Bus Registration</h1>
+        <h1 className="text-2xl font-semibold text-center text-gray-500 mt-6 mb-6">
+          Bus Registration
+        </h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label htmlFor="busName" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="busName"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Bus Name
             </label>
             <input
@@ -63,7 +82,10 @@ const BusRegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="busNumber" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="busNumber"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Bus Number
             </label>
             <input
@@ -77,7 +99,10 @@ const BusRegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="capacity" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="capacity"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Capacity
             </label>
             <input
@@ -91,7 +116,10 @@ const BusRegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="busRoute" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="busRoute"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Bus Route
             </label>
             <input
@@ -105,7 +133,10 @@ const BusRegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="rootDistance" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="rootDistance"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Root Distance
             </label>
             <input
@@ -119,7 +150,10 @@ const BusRegistrationForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="conductorName" className="block mb-2 text-sm text-gray-600">
+            <label
+              htmlFor="conductorName"
+              className="block mb-2 text-sm text-gray-600"
+            >
               Bus Conductor Name
             </label>
             <input
@@ -132,7 +166,7 @@ const BusRegistrationForm = () => {
               required
             />
           </div>
-        
+
           <button
             type="submit"
             className="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2"
@@ -141,7 +175,9 @@ const BusRegistrationForm = () => {
           </button>
           {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
-        <p className="text-xs text-gray-600 text-center mt-8">&copy; 2023 Bus Organization</p>
+        <p className="text-xs text-gray-600 text-center mt-8">
+          &copy; 2023 Bus Organization
+        </p>
       </div>
     </div>
   );
