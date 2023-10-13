@@ -1,26 +1,37 @@
 import busSchema from "../models/busModel.js";
+import busRouteSchema from "../models/busRouteModel.js";
 import mongoose from "../db/conn.js";
 
 export const busModel = mongoose.model("bus", busSchema);
+export const busRouteModel = mongoose.model("busRoute", busRouteSchema);
 
 //assigninb bus to a driver and a conduct
 const assignNewBus = (req, res) => {
-  const { busNumber, driverId, conductId, capacity, routeStart, routeEnd } =
-    req.body;
+  const { busNumber, driverId, conductId, capacity, routeName } = req.body;
 
   let newBus = new busModel();
   newBus.busNumber = busNumber;
   newBus.driverId = driverId;
   newBus.conductId = conductId;
   newBus.capacity = capacity;
-  newBus.routeStart = routeStart;
-  newBus.routeEnd = routeEnd;
+  newBus.routeName = routeName;
 
   newBus
     .save()
     .then((result) => {
-      console.log("New bus Added successsfully");
-      res.send("New bus Added successsfully");
+      const newBusRoute = new busRouteModel();
+      newBusRoute.routeName = routeName;
+      newBusRoute
+        .save()
+        .then((result) => {
+          res.send("New bus Added successsfully");
+        })
+        .catch((err) => {
+          res.send({
+            message: "Error while creating bus route",
+            error: err,
+          });
+        });
     })
     .catch((err) => {
       res.send({
@@ -28,6 +39,32 @@ const assignNewBus = (req, res) => {
         error: err,
       });
     });
+};
+
+const assignNewBusRoute = (req, res) => {
+  const { routeName } = req.body;
+
+  busRouteModel.findOne({ routeName: routeName }).then((result) => {
+    if (result) {
+      return res.send({
+        message: "Bus route already exists",
+      });
+    }
+    let newBusRoute = new busRouteModel();
+    newBusRoute.routeName = routeName;
+
+    newBusRoute
+      .save()
+      .then((result) => {
+        res.send("New bus route Added successsfully");
+      })
+      .catch((err) => {
+        res.send({
+          message: "Error while creating bus route",
+          error: err,
+        });
+      });
+  });
 };
 
 //updating existing bus details
@@ -120,10 +157,62 @@ const deleteBus = (req, res) => {
     });
 };
 
+const setCroudedState = (req, res) => {
+  const { routeName } = req.body;
+
+  if (!routeName) {
+    return res.send({
+      message: "Please provide route name",
+    });
+  }
+
+  busRouteModel
+    .updateOne({ routeName: routeName }, { routeStatus: "overcrouded" })
+    .then((result) => {
+      if (result.modifiedCount == 0) {
+        return res.send({
+          message: "No bus route found",
+        });
+      }
+      console.log("Success fully updated a bus");
+      res.send({ message: "Success fully updated a bus" });
+    })
+    .catch((err) => {
+      res.send({
+        message: "Error while findding a bus",
+        error: err,
+      });
+    });
+};
+
+const getConductorFreeBuses = (req, res) => {
+  busModel
+    .find({ conductId: null })
+    .then((result) => {
+      console.log("Success fully found busses");
+      if (result == null) {
+        res.send({
+          message: "No bus found",
+        });
+      } else {
+        res.send(result);
+      }
+    })
+    .catch((err) => {
+      res.send({
+        message: "Error while findding a bus",
+        error: err,
+      });
+    });
+};
+
 export default {
   assignNewBus,
   updateExistingBus,
   viewAllBus,
   viewOneBus,
   deleteBus,
+  getConductorFreeBuses,
+  assignNewBusRoute,
+  setCroudedState,
 };
