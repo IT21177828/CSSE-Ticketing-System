@@ -5,6 +5,7 @@ import Registration from './pages/Registration';
 import BusRegistrationForm from './components/BusRegistrationForm';
 import Dashboard from './components/Dashboard/Dashboard';
 import ManagerDashboard from './components/ManagerDashboard/ManagerDashboard';
+import BusRegistrationCard from './components/BusRegistrationCard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/bus" element={<BusRegistrationForm />} />
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/manager" element={<ManagerDashboard />} />
+        <Route path="/card" element={<BusRegistrationCard />} />
       </Routes>
     </Router>
   );
