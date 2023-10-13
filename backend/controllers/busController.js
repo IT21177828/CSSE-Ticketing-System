@@ -7,7 +7,15 @@ export const busRouteModel = mongoose.model("busRoute", busRouteSchema);
 
 //assigninb bus to a driver and a conduct
 const assignNewBus = (req, res) => {
-  const { busNumber, driverId, conductId, capacity, routeName } = req.body;
+  const {
+    busNumber,
+    driverId,
+    conductId,
+    capacity,
+    routeName,
+    busName,
+    rootDistance,
+  } = req.body;
 
   let newBus = new busModel();
   newBus.busNumber = busNumber;
@@ -15,6 +23,8 @@ const assignNewBus = (req, res) => {
   newBus.conductId = conductId;
   newBus.capacity = capacity;
   newBus.routeName = routeName;
+  newBus.busName = busName;
+  newBus.rootDistance = rootDistance;
 
   newBus
     .save()
@@ -69,17 +79,25 @@ const assignNewBusRoute = (req, res) => {
 
 //updating existing bus details
 const updateExistingBus = (req, res) => {
-  const { busNumber, driverId, conductId, capacity, routeStart, routeEnd } =
-    req.body;
+  const {
+    busNumber,
+    driverId,
+    conductId,
+    capacity,
+    routeName,
+    busName,
+    rootDistance,
+  } = req.body;
   busModel
     .updateOne(
       { busNumber: busNumber },
       {
+        busName: busName,
         driverId: driverId,
         conductId: conductId,
         capacity: capacity,
-        routeStart: routeStart,
-        routeEnd: routeEnd,
+        routeName: routeName,
+        rootDistance: rootDistance,
       }
     )
     .then((result) => {
