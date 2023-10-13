@@ -6,8 +6,10 @@ const BusRegistrationForm = () => {
     busName: "",
     busNumber: "",
     capacity: "",
-    busRoute: "", 
-    rootDistance: "", 
+
+    busRoute: "", // Set a default value
+    rootDistance: "", // New field for root distance
+
   });
 
   const [error, setError] = useState("");
@@ -33,9 +35,9 @@ const BusRegistrationForm = () => {
       rootDistance: parseInt(formData.rootDistance),
     };
 
-    axios.post("http://localhost:5050/bus", formData).then((res) => {
+    axios.post("http://localhost:5050/bus", busData).then((res) => {
       console.log(res);
-      if (res.data.message === "Bus created successfully") {
+      if (res.status === 200) {
         window.location.href = "/card";
       } else {
         setError(res.data);

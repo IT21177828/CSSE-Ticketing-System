@@ -1,17 +1,15 @@
 import React from 'react';
 
-const BusRegistrationCard = () => {
+
+const BusRegistrationCard = (props) => {
   // Sample bus registration data
-  const busData = {
-    busName: 'Damrejina',
-    busNumber: 'BUS123',
-    capacity: '50',
-    busRoute: 'Sample Route',
-    conductorName: 'John Doe',
-  };
+  console.log({props})
+  const {busName, busNumber, capacity, busRoute, rootDistance} = props;
+
+
 
   return (
-    <div className="flex items-center justify-center min-h-screen">
+    <div className="flex justify-center min-h-fit mb-14">
       <div className="w-full max-w-md p-4 bg-white border border-gray-300 rounded-lg shadow-md dark:bg-gray-800 dark:border-gray-700">
         <div className="text-center mb-4">
           <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bus Details</h2>
@@ -22,14 +20,14 @@ const BusRegistrationCard = () => {
               <div className="flex items-center space-x-4">
                 <div className="flex-1 min-w-0">
                   <p className="text-lg font-semibold text-gray-900 dark:text-white">
-                    {busData.busName}
+                    {busName}
                   </p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Bus Number: {busData.busNumber}
+                    Bus Number: {busNumber}
                   </p>
                 </div>
                 <div className="inline-flex items-center text-lg font-semibold text-indigo-500">
-                  Capacity: {busData.capacity}
+                  Capacity: {capacity}
                 </div>
               </div>
             </li>
