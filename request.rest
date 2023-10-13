@@ -20,3 +20,66 @@ Authorization : Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQ
 POST http://localhost:5050/users/refresh
 Content-Type: header
 Authorization : Beare eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGdtYWlsLmNvbSIsImlhdCI6MTY5NzE0MTY0OCwiZXhwIjoxNjk3MTQyNzI4fQ.xZUYTM_M7K9WTKPaUfvLx6Z66IQt6LmxXulVggifHXE
+
+###
+GET http://localhost:5050/bus/all
+
+###
+GET http://localhost:5050/bus/one?id=ND-4589
+
+###
+POST http://localhost:5050/bus/
+Content-Type: application/json
+
+{
+     "busNumber":"ND-5689",
+      "driverId":"Drive003",
+      "conductId":"ConID003",
+      "capacity":50,
+      "routeStart":"Gall",
+      "routeEnd":"Kaduwela"
+}
+
+###
+DELETE http://localhost:5050/bus/remove?id=LT-4859
+
+###
+PUT http://localhost:5050/bus/edit?id=LT-4859
+Content-Type: application/json
+
+{
+    "busNumber" :"ND-5689",
+     "driverId" :"D0023",
+     "conductId" :"C0052",
+     "routeStart": "Colombo"
+}
+
+
+{
+    "firstName":"Naveen",
+     "lastName":"Malshan",
+     "email":"naveen@gmail.com",
+     "passwordHash":"Naveen@123",
+     "gender":"m",
+     "age": 24,
+     "address":"Dompe ,gampaha"     
+}
+
+###
+POST http://localhost:5050/qr/createQR
+{
+    "userID": "652956e9bfcb9bb7b3e0f263"
+}
+
+###
+POST http://localhost:5050/qr/recreateQRCode
+{
+    "userID":"652937a69604eb52db13a375"
+}
+
+###
+POST http://localhost:5050/qr/topUpUserAccount
+{
+    "userID":"6529282b1dc892a49ba58b08",
+    "amount": 2000
+}
