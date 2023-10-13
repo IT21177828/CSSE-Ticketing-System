@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Registration = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    contact: '',
-    password: '',
-    confirmPassword: '',
+    name: "",
+    email: "",
+    contact: "",
+    password: "",
+    confirmPassword: "",
   });
 
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,9 +29,22 @@ const Registration = () => {
     } else if (formData.contact.length !== 10) {
       setError("Contact number must be exactly 10 digits");
     } else {
-      setError('');
+      setError("");
+
+      const userData = {
+        firstName: formData.name.split(" ")[0],
+        lastName: formData.name.split(" ")[1],
+        email: formData.email,
+        passwordHash: formData.password,
+        contactNo: formData.contact,
+      };
 
       // Continue with form submission
+      axios.post("http://localhost:5050/users/", userData).then((res) => {
+        console.log(res.data);
+        window.location.href = "/";
+      });
+
       // Handle form submission here
     }
   };
@@ -39,21 +53,35 @@ const Registration = () => {
     <div className="h-screen overflow-y-auto bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="mb-6"></div> {/* Add spacing above "Welcome" */}
-        <br/><br/><br/><br/>
-        <a href="#" className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white">
-          <img className="w-8 h-8 mr-2" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg" alt="logo" />
+        <br />
+        <br />
+        <br />
+        <br />
+        <a
+          href="#"
+          className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
+        >
+          <img
+            className="w-8 h-8 mr-2"
+            src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
+            alt="logo"
+          />
           Welcome
         </a>
-        <br/>
+        <br />
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-2 space-y-4 md:space-y-6 sm:p-8">
-          <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text xl dark:text-white text-center">
-  Create an account
-</h1>
-
+            <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text xl dark:text-white text-center">
+              Create an account
+            </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your name</label>
+                <label
+                  htmlFor="name"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your name
+                </label>
                 <input
                   type="text"
                   name="name"
@@ -66,7 +94,12 @@ const Registration = () => {
                 />
               </div>
               <div>
-                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                <label
+                  htmlFor="email"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Your email
+                </label>
                 <input
                   type="email"
                   name="email"
@@ -79,7 +112,12 @@ const Registration = () => {
                 />
               </div>
               <div>
-                <label htmlFor="contact" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contact number</label>
+                <label
+                  htmlFor="contact"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Contact number
+                </label>
                 <input
                   type="text"
                   name="contact"
@@ -92,7 +130,12 @@ const Registration = () => {
                 />
               </div>
               <div>
-                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                <label
+                  htmlFor="password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Password
+                </label>
                 <input
                   type="password"
                   name="password"
@@ -105,7 +148,12 @@ const Registration = () => {
                 />
               </div>
               <div>
-                <label htmlFor="confirmPassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+                <label
+                  htmlFor="confirmPassword"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >
+                  Confirm Password
+                </label>
                 <input
                   type="password"
                   name="confirmPassword"
@@ -118,13 +166,22 @@ const Registration = () => {
                 />
               </div>
               {error && <p className="text-red-500 text-sm">{error}</p>}
-              <button type="submit" className="w-full text-white bg-primary-600 hover-bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold rounded-lg text-3xl px-5 py-2.5 text-center dark-bg-primary-600 dark-hover-bg-primary-700 dark-focus-ring-primary-800">
+              <button
+                type="submit"
+                className="w-full text-white bg-primary-600 hover-bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-bold rounded-lg text-3xl px-5 py-2.5 text-center dark-bg-primary-600 dark-hover-bg-primary-700 dark-focus-ring-primary-800"
+              >
                 Create an account
               </button>
             </form>
             <div className="mb-6"></div> {/* Add spacing after the form */}
             <p className="text-sm font-light text-gray-500 dark:text-gray-400 text-center">
-              Already have an account? <Link to="/" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign Up here</Link>
+              Already have an account?{" "}
+              <Link
+                to="/"
+                className="font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >
+                Sign Up here
+              </Link>
             </p>
           </div>
         </div>
