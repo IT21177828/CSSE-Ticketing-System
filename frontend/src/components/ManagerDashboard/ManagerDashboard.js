@@ -9,7 +9,7 @@ const ManagerDashboard = () => {
         <h2 className="admin-title">Manager</h2>
         <ul>
           <li>
-            <Link to="/bus" className="sidebar-link">
+            <Link to="/" className="sidebar-link">
               Passenger Details
             </Link>
           </li>
