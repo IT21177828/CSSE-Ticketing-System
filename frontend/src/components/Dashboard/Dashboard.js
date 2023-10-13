@@ -16,7 +16,7 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="sidebar-link">
+            <Link to="/card" className="sidebar-link">
               View All Buses
             </Link>
           </li>
