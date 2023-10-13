@@ -3,12 +3,11 @@ import axios from "axios";
 
 const BusRegistrationForm = () => {
   const [formData, setFormData] = useState({
-    busName: "",
-    busNumber: "",
-    capacity: "",
-    busRoute: "",
-    conductorName: "",
-    rootDistance: "", // New field for root distance
+    busName: '',
+    busNumber: '',
+    capacity: '',
+    busRoute: '', // Set a default value
+    rootDistance: '', // New field for root distance
   });
 
   const [error, setError] = useState("");
@@ -79,6 +78,7 @@ const BusRegistrationForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
               required
+              placeholder="Damrejina"
             />
           </div>
           <div className="mb-4">
@@ -96,6 +96,7 @@ const BusRegistrationForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
               required
+              placeholder="NA-5487"
             />
           </div>
           <div className="mb-4">
@@ -113,6 +114,7 @@ const BusRegistrationForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
               required
+              placeholder="54"
             />
           </div>
           <div className="mb-4">
@@ -130,7 +132,17 @@ const BusRegistrationForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
               required
+              list="routes" // Add a list attribute for datalist
+              placeholder="Malabe to Kaduwela"
             />
+            <datalist id="routes"> {/* Add a datalist for default options */}
+              <option value="Malabe to Kaduwela" />
+              <option value="Malabe to Gampaha" />
+              <option value="Galle to Kaduwela" />
+              <option value="Galle to Malabe" />
+              <option value="Malabe to Panadura" />
+              <option value="Malabe to Kandy" />
+            </datalist>
           </div>
           <div className="mb-4">
             <label
@@ -147,8 +159,10 @@ const BusRegistrationForm = () => {
               onChange={handleChange}
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
               required
+              placeholder="30"
             />
           </div>
+
           <div className="mb-4">
             <label
               htmlFor="conductorName"
@@ -166,7 +180,6 @@ const BusRegistrationForm = () => {
               required
             />
           </div>
-
           <button
             type="submit"
             className="w-32 bg-gradient-to-r from-cyan-400 to-cyan-600 text-white py-2 rounded-lg mx-auto block focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 mb-2"
