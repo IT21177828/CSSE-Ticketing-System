@@ -81,3 +81,89 @@
     border-radius: 5px;
     transform: scale(1.05); 
   }
+
+
+
+  /* Component Middle */
+
+  /* Add styling for the Dashboard Overview */
+.content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  h3 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .overview-stats {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .stat-card {
+    flex: 1;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 10px;
+  }
+  
+  .stat-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  .sidebar-link {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3s, background 0.3s, transform 0.3s;
+  }
+  
+  /* Rest of your existing styles */
+  /* ... Your existing styles ... */
+
+  .notification-icon {
+    color: #333;
+    font-size: 24px;
+    margin-right: 20px;
+  }
+  
+  .dashboard-overview {
+    background: #f9f9f9;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+  }
+  
+ /* Your existing styles */
+
+.stat-card {
+    flex: 1;
+    padding: 20px;
+    background: #F3F4F6; /* Light gray background color */
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin: 0 10px;
+  }
+  
+  .stat-card .stat-title {
+    font-size: 24px; /* Adjust the title font size */
+    margin-bottom: 10px;
+    color: #6A71D7; /* Title text color */
+  }
+  
+  .stat-card .stat-value {
+    font-size: 32px; /* Adjust the value font size */
+    font-weight: bold;
+    color: #3C3C3C; /* Value text color */
+  }
+  
+  
