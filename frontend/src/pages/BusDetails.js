@@ -36,20 +36,17 @@ export default function BusDetails() {
   };
 
   const updateBusDetails = () => {
-    // You can access updatedBusName, updatedBusNumber, updatedCapacity
-    // and send them to your API for updating bus details.
-    // For simplicity, I'm just closing the modal in this example.
+    // Mekata dapan updatedBusName, updatedBusNumber, updatedCapacity,Route
+   
     closeModal();
   };
 
   const deleteBus = (busId) => {
-    // Implement the logic to delete the bus with the provided busId.
-    // You can use axios or another method to make an HTTP request to your server.
-    // After successful deletion, you can update the busData state and re-render the component.
+   //Delete Logic eka dapan methanta sagoo
     axios
       .delete(`http://localhost:5050/bus/${busId}`)
       .then((res) => {
-        // Handle the successful deletion (e.g., remove the deleted bus from busData state)
+    
         setBusData((prevBusData) => prevBusData.filter((bus) => bus.id !== busId));
         closeModal(); // Close the modal after successful deletion
       })
