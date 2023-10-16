@@ -154,6 +154,7 @@ const viewOneBus = (req, res) => {
 
 const deleteBus = (req, res) => {
   const busNumber = req.query.id;
+  console.log(busNumber)
 
   busModel
     .findOneAndDelete({ busNumber: busNumber })

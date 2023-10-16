@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBell } from "@fortawesome/free-solid-svg-icons";
-import './ManagerDashboard.css'; 
+import "./ManagerDashboard.css";
 
 const ManagerDashboard = () => {
   return (
@@ -11,28 +11,28 @@ const ManagerDashboard = () => {
         <h2 className="admin-title">Manager</h2>
         <ul>
           <li>
-            <Link to="/" className="sidebar-link">
-            Passenger Details
+            <Link to="/userDetails" className="sidebar-link">
+              Passenger Details
             </Link>
           </li>
           <li>
             <Link to="/" className="sidebar-link">
-            Finance
+              Finance
             </Link>
           </li>
           <li>
             <Link to="/" className="sidebar-link">
-            Conductor Details
+              Conductor Details
             </Link>
           </li>
           <li>
             <Link to="/" className="sidebar-link">
-            Time Tables
+              Time Tables
             </Link>
           </li>
           <li>
-            <Link to="/quick-actions" className="sidebar-link">
-              Quick Actions
+            <Link to="/card" className="sidebar-link">
+              View All Buses
             </Link>
           </li>
           <li>
