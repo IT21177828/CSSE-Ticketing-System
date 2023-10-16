@@ -6,8 +6,10 @@ const BusRegistrationForm = () => {
     busName: "",
     busNumber: "",
     capacity: "",
+
     busRoute: "", // Set a default value
     rootDistance: "", // New field for root distance
+
   });
 
   const [error, setError] = useState("");
@@ -44,7 +46,7 @@ const BusRegistrationForm = () => {
   };
 
   return (
-    <div
+    <div data-testid="busregister-1"
       className="min-h-screen flex items-center justify-center"
       style={{
         background: `url(https://cdn.pixabay.com/photo/2017/11/08/00/33/london-2928889_1280.jpg) no-repeat center center fixed`,
