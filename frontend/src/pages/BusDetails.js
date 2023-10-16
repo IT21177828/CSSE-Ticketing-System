@@ -21,19 +21,19 @@ export default function BusDetails() {
       .catch((err) => {
         console.log(err);
       });
-  }, [isModalOpen, render]);
+  }, [render]);
 
   const openModal = (bus) => {
     setSelectedBus(bus);
     setIsModalOpen(true);
     setUpdatedBusName(bus.busName);
     setUpdatedBusRoute(bus.routeName);
-    setUpdatedCapacity(bus.capacity);
+    setUpdatedCapacity(bus.capacity);   
   };
 
   const closeModal = () => {
     setSelectedBus(null);
-    setIsModalOpen(false);
+    setIsModalOpen(false);    
   };
 
   const updateBusDetails = () => {
@@ -54,6 +54,7 @@ export default function BusDetails() {
       })
       .then((res) => {
         console.log(res.data);
+        setRender(!render);
       });
 
     closeModal();
