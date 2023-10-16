@@ -5,11 +5,12 @@ import "./BusDetails.css";
 
 export default function BusDetails() {
   const [busData, setBusData] = useState([]);
-  const [selectedBus, setSelectedBus] = useState(null);
+  const [selectedBus, setSelectedBus] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedBusName, setUpdatedBusName] = useState("");
-  const [updatedBusNumber, setUpdatedBusNumber] = useState("");
+  const [updatedBusRoute, setUpdatedBusRoute] = useState("");
   const [updatedCapacity, setUpdatedCapacity] = useState(0);
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     axios
@@ -20,13 +21,13 @@ export default function BusDetails() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [isModalOpen, render]);
 
   const openModal = (bus) => {
     setSelectedBus(bus);
     setIsModalOpen(true);
     setUpdatedBusName(bus.busName);
-    setUpdatedBusNumber(bus.busNumber);
+    setUpdatedBusRoute(bus.routeName);
     setUpdatedCapacity(bus.capacity);
   };
 
@@ -36,19 +37,35 @@ export default function BusDetails() {
   };
 
   const updateBusDetails = () => {
-    // Mekata dapan updatedBusName, updatedBusNumber, updatedCapacity,Route
-   
+    console.log({
+      a: selectedBus.busNumber,
+      b: selectedBus.conductId,
+      c: selectedBus.routeName,
+      e: updatedBusName,
+      d: updatedCapacity,
+    });
+    axios
+      .put(`http://localhost:5050/bus/edit`, {
+        busNumber: selectedBus.busNumber,
+        busName: updatedBusName,
+        capacity: updatedCapacity,
+        conductId: selectedBus.conductId,
+        routeName: selectedBus.routeName,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+
     closeModal();
   };
 
   const deleteBus = (busId) => {
-   //Delete Logic eka dapan methanta sagoo
     axios
-      .delete(`http://localhost:5050/bus/${busId}`)
+      .delete(` http://localhost:5050/bus/remove?id=${busId}`)
       .then((res) => {
-    
-        setBusData((prevBusData) => prevBusData.filter((bus) => bus.id !== busId));
-        closeModal(); // Close the modal after successful deletion
+        console.log(res.data);
+        closeModal();
+        setRender(!render);
       })
       .catch((err) => {
         console.error(err);
@@ -59,14 +76,17 @@ export default function BusDetails() {
     const rows = [];
     for (let i = 0; i < busData.length; i += 2) {
       rows.push(
-        <div className="flex space-x-80 mb-4" key={i}>
+        <div
+          className="flex flex-row gap-5 items-center content-center place-content-center mb-4"
+          key={i}
+        >
           <BusRegistrationCard
             busName={busData[i].busName}
             busNumber={busData[i].busNumber}
             capacity={busData[i].capacity}
             busRoute={busData[i].routeName}
             onEdit={() => openModal(busData[i])}
-            onDelete={() => deleteBus(busData[i].id)} // Implement delete function
+            onDelete={() => deleteBus(busData[i].busNumber)} // Implement delete function
           />
           {i + 1 < busData.length && (
             <BusRegistrationCard
@@ -75,7 +95,7 @@ export default function BusDetails() {
               capacity={busData[i + 1].capacity}
               busRoute={busData[i + 1].routeName}
               onEdit={() => openModal(busData[i + 1])}
-              onDelete={() => deleteBus(busData[i + 1].id)} // Implement delete function
+              onDelete={() => deleteBus(busData[i + 1].busNumber)} // Implement delete function
             />
           )}
         </div>
@@ -85,7 +105,7 @@ export default function BusDetails() {
   };
 
   return (
-    <div className="bus-details">
+    <div className="bus-details ">
       {splitBusDataIntoRows()}
       {selectedBus && (
         <div
@@ -122,13 +142,16 @@ export default function BusDetails() {
                   Bus Name: {selectedBus.busName}
                 </p>
                 <p className="text-base leading-relaxed text-gray-500">
-                  Bus Number: {selectedBus.busNumber}
+                  Bus Route: {selectedBus.routeName}
                 </p>
                 <p className="text-base leading-relaxed text-gray-500">
                   Capacity: {selectedBus.capacity}
                 </p>
                 <div className="mb-4">
-                  <label htmlFor="newBusName" className="block text-gray-700 text-sm font-bold mb-2">
+                  <label
+                    htmlFor="newBusName"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
                     New Bus Name:
                   </label>
                   <input
@@ -141,20 +164,26 @@ export default function BusDetails() {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="newBusNumber" className="block text-gray-700 text-sm font-bold mb-2">
-                    New Bus Number:
+                  <label
+                    htmlFor="newBusNumber"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
+                    New Bus Route:
                   </label>
                   <input
                     type="text"
                     id="newBusNumber"
                     className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     placeholder="Enter new bus number"
-                    value={updatedBusNumber}
-                    onChange={(e) => setUpdatedBusNumber(e.target.value)}
+                    value={updatedBusRoute}
+                    onChange={(e) => setUpdatedBusRoute(e.target.value)}
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="newCapacity" className="block text-gray-700 text-sm font-bold mb-2">
+                  <label
+                    htmlFor="newCapacity"
+                    className="block text-gray-700 text-sm font-bold mb-2"
+                  >
                     New Capacity:
                   </label>
                   <input
@@ -167,7 +196,7 @@ export default function BusDetails() {
                   />
                 </div>
               </div>
-              <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b">
+              <div className="flex flex-col gap-3 mb-12 items-center place-content-center p-6 border-t border-gray-200 rounded-b">
                 <button
                   type="button"
                   className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
@@ -190,5 +219,3 @@ export default function BusDetails() {
     </div>
   );
 }
-
-
