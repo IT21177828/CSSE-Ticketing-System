@@ -6,27 +6,6 @@ import userSchema from "../models/usermodel.js";
 export const qrCodeModel = mongoose.model("qrCode", qrCode);
 export const userModel = mongoose.model("user", userSchema);
 
-// This function is used to top up the user's account balance
-
-const topUpUserAccount = async (req, res) => {
-  const { userID, amount } = req.body;
-
-  try {
-    const user = await userModel.findById(userID);
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-
-    user.accountBalance = user.accountBalance + amount;
-
-    await user.save();
-
-    res.status(200).send({ message: "User account topped up successfully" });
-  } catch (error) {
-    res.status(500).send({ message: "Error topping up user account" });
-  }
-};
-
 //create a new qr code for the user
 function generateNewQR(qrID, callback) {
   QRcode.toDataURL(qrID, function (err, url) {
@@ -187,7 +166,6 @@ const recreateQRCode = async (req, res) => {
 };
 
 export default {
-  topUpUserAccount,
   recreateQRCode,
   createQRCode,
 };

@@ -5,6 +5,7 @@ import express, { json } from "express";
 import qrRouter from "./Routers/qrRouter.js";
 import userRouter from "./Routers/userRouter.js";
 import conductorRouter from "./Routers/conduntorRouter.js";
+import transactionRouter from "./Routers/transactionRouter.js";
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use("/users", userRouter);
 app.use("/qr", qrRouter);
 app.use("/bus", busRouter);
 app.use("/conductor", conductorRouter);
+app.use("/transaction", transactionRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`);

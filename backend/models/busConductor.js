@@ -5,6 +5,10 @@ const busConductor = new mongoose.Schema({
     type: String,
     required: true,
   },
+  conductorName : {
+    type: String,
+    required: true,
+  },
   busNumber : {
     type: String,
     required: null,

@@ -1,3 +1,4 @@
+import axios from "axios";
 import React, { useState, useEffect } from "react";
 
 const AssignConductorForm = () => {
@@ -6,24 +7,31 @@ const AssignConductorForm = () => {
   const [showConductorList, setShowConductorList] = useState(false);
   const [showBusList, setShowBusList] = useState(false);
   const [isAssigning, setIsAssigning] = useState(false);
+  const [conductorList, setConductorList] = useState([]);
+  const [busList, setBusList] = useState([]);
+  const [conductorId, setConductorId] = useState("");
 
-  // Sample hardcoded conductor names and bus numbers
-  const sampleConductorNames = [
-    "Kamal Perera",
-    "Nimal de Silva",
-    "Sunimal Perera",
-    "Bootiya Gunarathne",
-    "Thilina Haawa",
-  ];
+  useEffect(() => {
+    axios
+      .get("http://localhost:5050/conductor/notAssigned")
+      .then((res) => {
+        console.log(res.data);
+        setConductorList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    axios
+      .get("http://localhost:5050/bus/free")
+      .then((res) => {
+        console.log(res.data);
 
-  const sampleBusNumbers = [
-    "NB-6554",
-    "NA-5415",
-    "BA-8798",
-    "NA-4589",
-    "NB-9854",
-    "ND-4578",
-  ];
+        setBusList(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const handleConductorNameChange = (e) => {
     setConductorName(e.target.value);
@@ -38,19 +46,27 @@ const AssignConductorForm = () => {
   const handleAssign = () => {
     // Simulate loading for a few seconds
     setIsAssigning(true);
+    const data = {
+      busNumber: busNumber,
+      conductorId: conductorId,
+    };
+
+    axios.post("http://localhost:5050/conductor/assign", data).then((res) => {
+      console.log(res.data);
+    });
+
     setTimeout(() => {
-      // Handle the assignment logic here
-      // After assignment is complete, reset the form and hide the lists
       setConductorName("");
       setBusNumber("");
       setShowConductorList(false);
       setShowBusList(false);
       setIsAssigning(false);
-    }, 2000); // Simulating a 2-second delay for the assignment process
+    }, 2000);
   };
 
-  const selectConductor = (name) => {
+  const selectConductor = (name, userID) => {
     setConductorName(name);
+    setConductorId(userID);
     setShowConductorList(false);
   };
 
@@ -79,17 +95,21 @@ const AssignConductorForm = () => {
           />
           {showConductorList && (
             <ul className="border border-gray-300 rounded p-2 mt-2 max-h-24 overflow-y-auto">
-              {sampleConductorNames
+              {conductorList
                 .filter((name) =>
-                  name.toLowerCase().includes(conductorName.toLowerCase())
+                  name.conductorName
+                    .toLowerCase()
+                    .includes(conductorName.toLowerCase())
                 )
                 .map((name) => (
                   <li
-                    key={name}
+                    key={name.conductorName}
                     className="cursor-pointer hover-bg-blue-200 p-1"
-                    onClick={() => selectConductor(name)}
+                    onClick={() =>
+                      selectConductor(name.conductorName, name.userID)
+                    }
                   >
-                    {name}
+                    {name.conductorName}
                   </li>
                 ))}
             </ul>
@@ -112,17 +132,19 @@ const AssignConductorForm = () => {
           />
           {showBusList && (
             <ul className="border border-gray-300 rounded p-2 mt-2 max-h-24 overflow-y-auto">
-              {sampleBusNumbers
+              {busList
                 .filter((number) =>
-                  number.toLowerCase().includes(busNumber.toLowerCase())
+                  number.busNumber
+                    .toLowerCase()
+                    .includes(busNumber.toLowerCase())
                 )
                 .map((number) => (
                   <li
-                    key={number}
+                    key={number.busNumber}
                     className="cursor-pointer hover-bg-blue-200 p-1"
-                    onClick={() => selectBus(number)}
+                    onClick={() => selectBus(number.busNumber)}
                   >
-                    {number}
+                    {number.busNumber}
                   </li>
                 ))}
             </ul>

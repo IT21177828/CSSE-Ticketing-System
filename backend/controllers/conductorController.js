@@ -13,7 +13,7 @@ const assignConductor = (req, res) => {
   const { busNumber, conductorId } = req.body;
 
   if (!busNumber || !conductorId) {
-    res.send({
+    return res.send({
       message: "Please provide bus number and conductor id",
     });
   }

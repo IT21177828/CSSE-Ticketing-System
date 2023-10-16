@@ -8,9 +8,11 @@ userRouter.post("/", registerUser);
 userRouter.post("/login", userController.loginUser);
 userRouter.get("/checkAge", checkAge);
 userRouter.put("/userRole",  userController.assignUserRole);
+userRouter.get("/all", userController.getAllUsers);
 
 userRouter.post("/refresh", userController.verify, userController.refresh);
 userRouter.post("/details", userController.verify, userController.userDetails);
 userRouter.post("/showName", userController.verify, userController.showName);
+userRouter.post("/adminCreate", userController.adminAccount);
 
 export default userRouter;
