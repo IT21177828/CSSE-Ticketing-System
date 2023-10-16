@@ -1,6 +1,6 @@
 ###
 
-POST http://localhost:5050/users/login
+POST http://localhost:5050/users/adminCreate
 Content-Type: application/json
 
 {

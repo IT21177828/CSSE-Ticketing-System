@@ -27,8 +27,16 @@ export function hashPasswordNew(password) {
 //add new user
 
 export function registerUser(req, res) {
-  const { firstName, lastName, email, passwordHash, gender, age, address,contactNo } =
-    req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    passwordHash,
+    gender,
+    age,
+    address,
+    contactNo,
+  } = req.body;
 
   let newUser = new userModel();
   newUser.firstName = firstName;
@@ -258,6 +266,20 @@ export function updateUser(req, res) {
     req.body;
 }
 
+const getAllUsers = (req, res) => {
+  userModel
+    .find({userRole: { $nin: ["admin"]}})
+    .then((users) => {
+      res.send(users);
+    })
+    .catch((err) => {
+      res.send({
+        message: "Error while getting users",
+        error: err,
+      });
+    });
+};
+
 const assignUserRole = (req, res) => {
   const { email, userRole } = req.body;
 
@@ -277,6 +299,7 @@ const assignUserRole = (req, res) => {
         if (userRole == "conductor") {
           const conductor = new busConductorModel();
           conductor.userID = user._id;
+          conductor.conductorName = user.firstName + " " + user.lastName;
           conductor.busNumber = null;
           conductor
             .save()
@@ -330,4 +353,6 @@ export default {
   loginUser,
   userDetails,
   assignUserRole,
+  getAllUsers,
+  adminAccount,
 };
