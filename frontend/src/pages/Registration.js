@@ -58,7 +58,7 @@ const Registration = () => {
         <br />
         <br />
         <a
-          href="#"
+          href="/"
           className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <img
