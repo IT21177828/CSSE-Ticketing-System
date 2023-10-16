@@ -1,10 +1,15 @@
 import mongoose from "../db/conn.js";
 import userSchema from "../models/usermodel.js";
+import transactionSchema from "../models/transactionModel.js";
 
 export const userModel = mongoose.model("user", userSchema);
+export const transactionModel = mongoose.model(
+  "transaction",
+  transactionSchema
+);
 
 const deductBusFare = async (req, res) => {
-  const { userID, amount } = req.body;
+  const { userID, amount, conductorName, busNumber } = req.body;
 
   try {
     userModel.findOne({ _id: userID }).then((result) => {
@@ -27,7 +32,28 @@ const deductBusFare = async (req, res) => {
         )
         .then((result) => {
           console.log("User account topup successfully");
-          res.send({ message: "User account topup successfully" });
+
+          const newTransaction = new transactionModel();
+          newTransaction.userID = userID;
+          newTransaction.deductedAmount = amount;
+          newTransaction.busNumber = busNumber;
+          newTransaction.conductorName = conductorName;
+
+          newTransaction
+            .save()
+            .then((result) => {
+              console.log("Transaction saved successfully");
+              res.send({
+                message: "Transaction happened successfully",
+              });
+            })
+            .catch((err) => {
+              console.log("Error saving transaction");
+              res.send({
+                message: "Error while transaction process!",
+                error: err,
+              });
+            });
         })
         .catch((err) => {
           res.send({
