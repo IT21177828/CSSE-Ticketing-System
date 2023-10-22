@@ -84,3 +84,14 @@ POST http://localhost:5050/qr/topUpUserAccount
     "userID":"6529282b1dc892a49ba58b08",
     "amount": 2000
 }
+
+###
+POST http://localhost:5050/transaction/deductBusFare
+Content-Type: application/json
+
+{
+    "userID":"65294c9863497cad3070edd9",
+    "amount":80040400980,
+    "busNumber":"ND-4589",
+    "conductorName":"Naveen Malshan"
+}
