@@ -1,0 +1,55 @@
+/* 
+body {
+    background-image: url('https://cdn.pixabay.com/photo/2014/07/05/08/42/bus-stop-384617_1280.jpg');
+    background-size: cover; 
+    background-repeat: no-repeat; 
+    background-attachment: fixed; 
+    color: #ffffff; 
+    font-family: Arial, sans-serif; 
+  }
+  
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+  }
+  
+  thead {
+    background-color: rgba(0, 0, 0, 0.6); 
+    color: #ffffff; 
+  }
+  
+  thead th {
+    padding: 12px;
+    text-align: left;
+  }
+  
+  tbody {
+    background-color: transparent; 
+    color: #ffffff; 
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.2); 
+  }
+  
+  tbody td {
+    padding: 12px;
+  } */
+  
+  @keyframes slide-in {
+    from {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  .table-animation {
+    animation: slide-in 2.1s ease both;
+  }
+  
