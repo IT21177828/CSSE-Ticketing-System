@@ -11,7 +11,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h2 className="admin-title">Admin</h2>
+        <h2>< Link to="/admin" className="admin-title">
+             Admin
+            </Link></h2>
         <ul>
           <li>
             <Link to="busReg/" className="sidebar-link">
@@ -33,11 +35,7 @@ const Dashboard = () => {
               View All Passengers
             </Link>
           </li>
-          <li>
-            <Link to="quick-actions/" className="sidebar-link">
-              Quick Actions
-            </Link>
-          </li>
+       
         </ul>
       </div>
       <div className="flex-1 h-screen overflow-auto">
