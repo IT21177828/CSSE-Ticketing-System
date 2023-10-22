@@ -61,7 +61,6 @@
 
   .content {
     flex: 1;
-    padding: 20px;
   }
 }
 
@@ -89,7 +88,6 @@
 /* Add styling for the Dashboard Overview */
 .content {
   flex: 1;
-  padding: 20px;
 }
 
 h3 {

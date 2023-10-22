@@ -48,7 +48,7 @@ const SignIn = () => {
       <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <div className="mb-6"></div> {/* Add spacing above "Welcome" */}
         <a
-          href="#"
+          href="/"
           className="flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
         >
           <img
