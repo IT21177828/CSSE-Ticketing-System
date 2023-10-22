@@ -6,7 +6,7 @@ import BusRegistrationForm from "./components/BusRegistrationForm";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ManagerDashboard from "./components/ManagerDashboard/ManagerDashboard";
 import BusDetails from "./pages/BusDetails";
-import BusSchedulePage from "./components/BusSchedulePage";
+import BusSchedulePage from "./components/BusTimetable/BusSchedulePage";
 
 function App() {
   return (
