@@ -1,3 +1,4 @@
+// Import Mongoose models, user authentication libraries, and nodemailer
 import busConductorSchema from "../models/busConductor.js";
 import mongoose from "../db/conn.js";
 import userSchema from "../models/usermodel.js";
@@ -5,6 +6,7 @@ import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 
+// Create a nodemailer transporter for sending emails
 const transporter = nodemailer.createTransport({
   service: "Gmail", // Use the appropriate email service
   auth: {
@@ -13,20 +15,20 @@ const transporter = nodemailer.createTransport({
   },
 });
 
+// Create Mongoose models for 'user' and 'busConductor' collections
 export const userModel = mongoose.model("user", userSchema);
-export const busConductorModel = mongoose.model(
-  "busConductor",
-  busConductorSchema
-);
+export const busConductorModel = mongoose.model("busConductor", busConductorSchema);
 
+// Function to hash a password using PBKDF2
 export function hashPasswordNew(password) {
   return crypto
     .pbkdf2Sync(password, "no_salt", 1000, 64, `sha512`)
     .toString(`hex`);
 }
-//add new user
 
+// Function to add a new user
 export function registerUser(req, res) {
+  // Extract user information from the request body
   const {
     firstName,
     lastName,
@@ -38,6 +40,7 @@ export function registerUser(req, res) {
     contactNo,
   } = req.body;
 
+  // Create a new user document
   let newUser = new userModel();
   newUser.firstName = firstName;
   newUser.lastName = lastName;
@@ -49,12 +52,14 @@ export function registerUser(req, res) {
   newUser.userRole = ["user"];
   newUser.contactNo = contactNo;
 
+  // Save the user document to the database
   newUser
     .save()
     .then((response) => {
       res.send(response);
       console.log("User added successfully");
 
+      // Send a test email using nodemailer
       const mailOptions = {
         from: "it21180552@my.sliit.lk", // Replace with your email address
         to: newUser.email, // Replace with the recipient's email address
@@ -76,10 +81,18 @@ export function registerUser(req, res) {
     });
 }
 
-// create an admin account
+// Function to create an admin account
 export function adminAccount(req, res) {
-  const { firstName, lastName, email, passwordHash, gender, age, address } =
-    req.body;
+  // Create an admin user with default values
+  const {
+    firstName,
+    lastName,
+    email,
+    passwordHash,
+    gender,
+    age,
+    address,
+  } = req.body;
 
   let newUser = new userModel();
   newUser.firstName = "admin";
@@ -91,11 +104,12 @@ export function adminAccount(req, res) {
   newUser.address = "admin address";
   newUser.userRole = ["admin"];
 
+  // Save the admin user to the database
   newUser
     .save()
     .then((response) => {
       res.send(response);
-      console.log("User added successfully");
+      console.log("Admin user added successfully");
     })
     .catch((err) => {
       res.send(err);
@@ -103,14 +117,14 @@ export function adminAccount(req, res) {
     });
 }
 
-// login user
-
+// Function to generate an access token
 const generateAccessToken = (user) => {
-  console.log(user);
   return jwt.sign({ email: user.email, name: user.firstName }, "secret_key", {
     expiresIn: "18m",
   });
 };
+
+// Function to generate a refresh token
 const generateRefreshToken = (user) => {
   return jwt.sign(
     { email: user.email, name: user.firstName },
@@ -121,24 +135,23 @@ const generateRefreshToken = (user) => {
   );
 };
 
+// Function to log in a user
 const loginUser = (req, res) => {
+  // Extract email and password from the request body
   const { email, passwordHash } = req.body;
 
+  // Find the user with the specified email
   userModel
     .findOne({ email: email })
     .then((user) => {
-      // check response is not null
+      // Check if a user is found
       if (user != null) {
-        // check if the user is admin
-        if (
-          user.email === "admin@gmail.com" &&
-          user.passwordHash === hashPasswordNew(passwordHash)
-        ) {
+        // Check if the user is an admin
+        if (user.email === "admin@gmail.com" && user.passwordHash === hashPasswordNew(passwordHash)) {
           const A_token = generateAccessToken(user);
           const R_token = generateRefreshToken(user);
 
-          // req.session.userId = response._id;
-
+          // Add the refresh token to the list
           refreashTokens.push(R_token);
 
           res.status(200).json({
@@ -148,6 +161,7 @@ const loginUser = (req, res) => {
             user: user,
           });
         } else {
+          // Check if the password is correct for a regular user
           if (user.passwordHash == hashPasswordNew(passwordHash)) {
             const A_token = generateAccessToken(user);
             const R_token = generateRefreshToken(user);
@@ -172,15 +186,15 @@ const loginUser = (req, res) => {
     });
 };
 
-//get user details
+// Function to get user details
 const userDetails = (req, res) => {
   const email = req.user.email;
   userModel
     .findOne({ email: email })
     .then((user) => {
-      // check response is not null
+      // Check if a user is found
       if (user != null) {
-        //send user details
+        // Send user details
         res.status(200).json({
           message: "User Details",
           user: user,
@@ -194,6 +208,7 @@ const userDetails = (req, res) => {
       console.log(err);
     });
 };
+
 
 //checking age for safe browsing
 export function checkAge(req, res) {
