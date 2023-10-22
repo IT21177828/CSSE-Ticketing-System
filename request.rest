@@ -32,11 +32,13 @@ POST http://localhost:5050/bus/
 Content-Type: application/json
 
 {
-    "busNumber":"JL-8289",
+    "busNumber":"NP-2559",
+    "busName":"Gall Express Line",
     "driverId": null,
     "conductId": null,
     "capacity":50,
-    "routeName":"Gall to Hambarana"
+    "routeName":"Gall to Maharagama",
+    "rootDistance": 200
 }
 
 ###

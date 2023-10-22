@@ -107,6 +107,12 @@ export default function BusDetails() {
 
   return (
     <div className="bus-details ">
+      <div className="h-20 bg-[#333] mb-16">
+        <h1 className="float-left mt-6 ml-8 text-2xl font-semibold text-white">
+          Bus Details
+        </h1>
+      </div>
+
       {splitBusDataIntoRows()}
       {selectedBus && (
         <div

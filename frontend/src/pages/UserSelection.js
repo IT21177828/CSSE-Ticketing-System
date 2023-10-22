@@ -88,106 +88,113 @@ export default function UserSelection() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto bg-gray-100 p-6 rounded-md">
-      <label
-        htmlFor="search"
-        className="block text-sm font-medium text-gray-600"
-      >
-        Search:
-      </label>
-      <input
-        type="text"
-        id="search"
-        placeholder="Type a name..."
-        value={searchTerm}
-        onChange={handleSearch}
-        className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
-      />
-
-      {/* Display user cards based on the current user list */}
-      {users.map((user) => (
-        <UserDetailsCard
-          key={user._id}
-          user={user}
-          onViewUser={handleViewUser}
+    <div>
+      <div className="h-20 bg-[#333] mb-16">
+        <h1 className="float-left mt-6 ml-8 text-2xl font-semibold text-white">
+          Passenger Details
+        </h1>
+      </div>
+      <div className="max-w-xl mx-auto bg-gray-100 p-6 rounded-md">
+        <label
+          htmlFor="search"
+          className="block text-sm font-medium text-gray-600"
+        >
+          Search:
+        </label>
+        <input
+          type="text"
+          id="search"
+          placeholder="Type a name..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="mt-1 p-2 border rounded-md w-full focus:outline-none focus:border-blue-500"
         />
-      ))}
 
-      {/* User Modal */}
-      <Modal
-        isOpen={isModalOpen}
-        contentLabel="User Details Modal"
-        style={{
-          content: {
-            width: "fit-content",
-            height: "fit-content",
-            margin: "auto",
-          },
-        }}
-      >
-        {selectedUser && (
-          <div className="p-6">
-            <div className="flex justify-between items-center mb-8">
-              <h2 className="text-2xl font-medium">
-                {selectedUser.firstName} {selectedUser.lastName}
-              </h2>
-              <button
-                className="text-gray-500 hover:text-gray-700 focus:outline-none"
-                onClick={handleCloseModal}
-              >
-                <svg
-                  className="h-5 w-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-              </button>
-            </div>
-            <div className="flex justify-between items-start gap-5">
-              <p className="text-gray-700">
-                Account Balance: {selectedUser.accountBalance}
-              </p>
-              <div className="flex items-center space-x-2">
-                <input
-                  type="number"
-                  placeholder="New Balance"
-                  required
-                  max={100000}
-                  min={0}
-                  value={newAccountBalance}
-                  onChange={(e) => {
-                    const inputValue = e.target.value;
-                    if (inputValue <= 100000 && inputValue >= 0) {
-                      setNewAccountBalance(inputValue);
-                    }else{
-                      setNewAccountBalance(0);
-                    }
-                  }}
-                  className="p-2 border w-36 rounded-md focus:outline-none focus:border-blue-500"
-                />
+        {/* Display user cards based on the current user list */}
+        {users.map((user) => (
+          <UserDetailsCard
+            key={user._id}
+            user={user}
+            onViewUser={handleViewUser}
+          />
+        ))}
 
-                {showAlert && (
-                  <AlertBox message="Update complete!" onClose={closeAlert} />
-                )}
+        {/* User Modal */}
+        <Modal
+          isOpen={isModalOpen}
+          contentLabel="User Details Modal"
+          style={{
+            content: {
+              width: "fit-content",
+              height: "fit-content",
+              margin: "auto",
+            },
+          }}
+        >
+          {selectedUser && (
+            <div className="p-6">
+              <div className="flex justify-between items-center mb-8">
+                <h2 className="text-2xl font-medium">
+                  {selectedUser.firstName} {selectedUser.lastName}
+                </h2>
                 <button
-                  onClick={handleUpdateBalance}
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none"
+                  className="text-gray-500 hover:text-gray-700 focus:outline-none"
+                  onClick={handleCloseModal}
                 >
-                  Update Balance
+                  <svg
+                    className="h-5 w-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
                 </button>
               </div>
+              <div className="flex justify-between items-start gap-5">
+                <p className="text-gray-700">
+                  Account Balance: {selectedUser.accountBalance}
+                </p>
+                <div className="flex items-center space-x-2">
+                  <input
+                    type="number"
+                    placeholder="New Balance"
+                    required
+                    max={100000}
+                    min={0}
+                    value={newAccountBalance}
+                    onChange={(e) => {
+                      const inputValue = e.target.value;
+                      if (inputValue <= 100000 && inputValue >= 0) {
+                        setNewAccountBalance(inputValue);
+                      } else {
+                        setNewAccountBalance(0);
+                      }
+                    }}
+                    className="p-2 border w-36 rounded-md focus:outline-none focus:border-blue-500"
+                  />
+
+                  {showAlert && (
+                    <AlertBox message="Update complete!" onClose={closeAlert} />
+                  )}
+                  <button
+                    onClick={handleUpdateBalance}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none"
+                  >
+                    Update Balance
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        )}
-      </Modal>
+          )}
+        </Modal>
+      </div>
     </div>
   );
 }
