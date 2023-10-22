@@ -21,8 +21,8 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="sidebar-link">
-              View Manager Details
+            <Link to="/timetable" className="sidebar-link">
+              View Timetables
             </Link>
           </li>
           <li>
