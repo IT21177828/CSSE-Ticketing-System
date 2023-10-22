@@ -5,6 +5,7 @@ import AssignConductorForm from "../AssignConductorForm";
 import LandingDashboard from "./LandingDashboard";
 import UserSelection from "../../pages/UserSelection";
 import BusDetails from "../../pages/BusDetails";
+import BusSchedulePage from "../BusSchedulePage";
 
 const ManagerDashboard = () => {
   return (
@@ -28,7 +29,7 @@ const ManagerDashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="sidebar-link">
+            <Link to="timeTab/" className="sidebar-link">
               Time Tables
             </Link>
           </li>
@@ -45,6 +46,7 @@ const ManagerDashboard = () => {
           <Route path="assign" element={<AssignConductorForm />} />
           <Route path="passenger" element={<UserSelection />} />
           <Route path="card" element={<BusDetails />} />
+          <Route path="timeTab" element={<BusSchedulePage />} />
         </Routes>
       </div>
     </div>
