@@ -6,6 +6,7 @@ import BusRegistrationForm from "./components/BusRegistrationForm";
 import Dashboard from "./components/Dashboard/Dashboard";
 import ManagerDashboard from "./components/ManagerDashboard/ManagerDashboard";
 import BusDetails from "./pages/BusDetails";
+import BusSchedulePage from "./components/BusSchedulePage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/admin" element={<Dashboard />} />
         <Route path="/manager/*" element={<ManagerDashboard />} />
         <Route path="/card" element={<BusDetails />} />
+        <Route path="/timetable" element={<BusSchedulePage />}/>
       </Routes>
     </Router>
   );
