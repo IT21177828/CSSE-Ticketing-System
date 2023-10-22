@@ -16,7 +16,7 @@ const deductBusFare = async (req, res) => {
     const { userID, amount, conductorName, busNumber } = req.body;
 
     // Finding the user by ID
-    userModel.findOne({ _id: userID }).then((result) => {
+    userModel.findOne({ qrCode: userID }).then((result) => {
       // If the user is not found, send an error response
       if (!result) {
         return res.send({
@@ -34,7 +34,7 @@ const deductBusFare = async (req, res) => {
       // Updating the user's account balance
       userModel
         .updateOne(
-          { _id: userID },
+          { qrCode: userID },
           { accountBalance: parseFloat(result.accountBalance) - amount }
         )
         .then((result) => {

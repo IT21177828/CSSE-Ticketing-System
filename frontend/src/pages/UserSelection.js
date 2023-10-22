@@ -88,16 +88,22 @@ export default function UserSelection() {
   };
 
   return (
-    <div>
+    <div
+      className="bg-transparent h-screen overflow-auto w-full"
+      style={{
+        background: `url(https://cdn.pixabay.com/photo/2018/11/07/23/51/london-3801534_1280.jpg) no-repeat center center fixed`,
+        backgroundSize: "cover",
+      }}
+    >
       <div className="h-20 bg-[#333] mb-16">
         <h1 className="float-left mt-6 ml-8 text-2xl font-semibold text-white">
           Passenger Details
         </h1>
       </div>
-      <div className="max-w-xl mx-auto bg-gray-100 p-6 rounded-md">
+      <div className="max-w-2xl mx-auto p-6 bg-neutral-300 bg-opacity-50 rounded-md">
         <label
           htmlFor="search"
-          className="block text-sm font-medium text-gray-600"
+          className="block text-purple-900 text-lg font-bold"
         >
           Search:
         </label>
@@ -128,13 +134,15 @@ export default function UserSelection() {
               width: "fit-content",
               height: "fit-content",
               margin: "auto",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
             },
           }}
         >
           {selectedUser && (
-            <div className="p-6">
-              <div className="flex justify-between items-center mb-8">
-                <h2 className="text-2xl font-medium">
+            <div className="p-6 bg-white rounded-md">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-3xl font-semibold text-gray-800">
                   {selectedUser.firstName} {selectedUser.lastName}
                 </h2>
                 <button
@@ -142,7 +150,7 @@ export default function UserSelection() {
                   onClick={handleCloseModal}
                 >
                   <svg
-                    className="h-5 w-5"
+                    className="h-6 w-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -157,11 +165,11 @@ export default function UserSelection() {
                   </svg>
                 </button>
               </div>
-              <div className="flex justify-between items-start gap-5">
+              <div className="flex flex-col items-start gap-4">
                 <p className="text-gray-700">
-                  Account Balance: {selectedUser.accountBalance}
+                  Account Balance: ${selectedUser.accountBalance}
                 </p>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center gap-8">
                   <input
                     type="number"
                     placeholder="New Balance"

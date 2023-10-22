@@ -4,7 +4,6 @@ const transaction = new mongoose.Schema({
   userID: {
     type: String,
     required: true,
-    unique: true,
   },
   deductedAmount: {
     type: Number,
