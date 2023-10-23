@@ -116,7 +116,7 @@ const BusSchedulePage = () => {
     Time
   </th>
   <th scope="col" className="px-6 py-3 text-white">
-    <span className="text-lg">Direction</span>
+    <span className="text-sm">Direction</span>
   </th>
 </tr>
 
