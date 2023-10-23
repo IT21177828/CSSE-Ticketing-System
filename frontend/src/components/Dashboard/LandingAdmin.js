@@ -3,8 +3,8 @@ import React from "react";
 export default function LandingAdmin() {
   return (
     <div>
-      <div className="h-20 bg-[#333] mb-16">
-        <h1 className="float-left mt-6 ml-8 text-2xl font-semibold text-white">
+      <div className="h-20 bg-[#ffffff] mb-16">
+        <h1 className="float-left mt-6 ml-8 text-4xl font-semibold text-black">
           Dashboard Overview
         </h1>
       </div>

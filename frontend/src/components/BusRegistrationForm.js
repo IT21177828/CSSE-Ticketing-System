@@ -47,7 +47,7 @@ const BusRegistrationForm = () => {
   return (
     <div>
       <div className="h-20 bg-[#333]">
-        <h1 className="float-left mt-6 ml-8 text-2xl font-semibold text-white">
+        <h1 className="float-left mt-6 ml-8 text-3xl font-semibold text-white">
           Bus Registration
         </h1>
       </div>
