@@ -14,13 +14,13 @@ const ManagerDashboard = () => {
         <h2 className="admin-title">Manager</h2>
         <ul>
           <li>
-            <Link to="passenger/" className="sidebar-link">
-              Passenger Details
+            <Link to="" className="sidebar-link">
+              Dashboard
             </Link>
           </li>
           <li>
-            <Link to="/" className="sidebar-link">
-              Finance
+            <Link to="passenger/" className="sidebar-link">
+              Passenger Details
             </Link>
           </li>
           <li>

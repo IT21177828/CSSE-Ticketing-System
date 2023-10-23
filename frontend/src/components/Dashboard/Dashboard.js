@@ -14,6 +14,11 @@ const Dashboard = () => {
         <h2 className="admin-title">Admin</h2>
         <ul>
           <li>
+            <Link to="" className="sidebar-link">
+              Dashboard
+            </Link>
+          </li>
+          <li>
             <Link to="busReg/" className="sidebar-link">
               Bus Registration
             </Link>
@@ -31,11 +36,6 @@ const Dashboard = () => {
           <li>
             <Link to="passenger/" className="sidebar-link">
               View All Passengers
-            </Link>
-          </li>
-          <li>
-            <Link to="quick-actions/" className="sidebar-link">
-              Quick Actions
             </Link>
           </li>
         </ul>
