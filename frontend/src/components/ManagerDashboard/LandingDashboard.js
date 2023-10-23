@@ -30,7 +30,7 @@ export default function LandingDashboard() {
                 style={{ borderRadius: "10%" }}
               />
             </div>
-            <p className="stat-value">400</p>
+            <p className="stat-value">5</p>
           </div>
           <div className="stat-card">
             <h4 className="stat-title">Total Conductors</h4>

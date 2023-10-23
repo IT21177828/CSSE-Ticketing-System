@@ -3,7 +3,8 @@ import axios from "axios";
 import Modal from "react-modal";
 import UserDetailsCard from "../components/UserDetailsCard";
 import AlertBox from "../utils/AlertBox";
-
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import PdfQrTemp from "../components/PdfQrTemp";
 Modal.setAppElement("#root"); // Set the root element for accessibility
 
 export default function UserSelection() {
@@ -11,7 +12,9 @@ export default function UserSelection() {
   const [users, setUsers] = useState([]);
   const [retrievedUsers, setRetrievedUsers] = useState([]);
   const [selectedUser, setSelectedUser] = useState(null);
+  const [selectedforQrUser, setSelectedforQrUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalQrOpen, setIsModalQrOpen] = useState(false);
   const [newAccountBalance, setNewAccountBalance] = useState("");
   const [showAlert, setShowAlert] = useState(false);
 
@@ -63,10 +66,35 @@ export default function UserSelection() {
     setIsModalOpen(true);
   };
 
+  const handleViewQr = (userId) => {
+    // Find the selected user
+    const user = retrievedUsers.find((user) => user._id === userId);
+    setSelectedforQrUser(user);
+    const data = { qrCode: user.qrCode };
+    console.log(data);
+    axios
+      .post("http://localhost:5050/qr/getQrcode", { qrCode: user.qrCode })
+      .then((res) => {
+        console.log(res.data);
+        setIsModalQrOpen(true);
+        setSelectedforQrUser(res.data);
+        setSelectedUser(user);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setSelectedUser(null);
     setNewAccountBalance("");
+  };
+
+  const handleClosQrModal = () => {
+    setIsModalQrOpen(false);
+    setSelectedUser(null);
+    setSelectedforQrUser(null);
   };
 
   const handleUpdateBalance = async () => {
@@ -122,6 +150,7 @@ export default function UserSelection() {
             key={user._id}
             user={user}
             onViewUser={handleViewUser}
+            onQRCode={handleViewQr}
           />
         ))}
 
@@ -197,6 +226,96 @@ export default function UserSelection() {
                   >
                     Update Balance
                   </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </Modal>
+
+        {/* QR Modal */}
+        <Modal
+          isOpen={isModalQrOpen}
+          contentLabel="User Details Modal"
+          style={{
+            content: {
+              width: "fit-content",
+              height: "fit-content",
+              margin: "auto",
+              borderRadius: "8px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.5)",
+            },
+          }}
+        >
+          {selectedforQrUser && (
+            <div className="p-6 bg-white rounded-md">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-3xl font-semibold text-gray-800">
+                  {selectedforQrUser.firstName} {selectedforQrUser.lastName}
+                </h2>
+                <button
+                  className="text-gray-500 hover:text-gray-700 float-right focus:outline-none"
+                  onClick={handleClosQrModal}
+                >
+                  <svg
+                    className="h-6 w-6"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    ></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-gray-700 text-center">
+                  {selectedforQrUser.firstName}
+                  {selectedforQrUser.lastName}
+                </p>
+                <img
+                  src={selectedforQrUser.qrCode}
+                  alt="Qrcode image"
+                  width={250}
+                  height={250}
+                />
+                <p className="text-gray-700 text-center">
+                  Your Generated QR Code
+                </p>
+                <div className="flex items-center gap-8">
+                  {showAlert && (
+                    <AlertBox message="Update complete!" onClose={closeAlert} />
+                  )}
+
+                  <PDFDownloadLink
+                    document={
+                      <PdfQrTemp
+                        imageq={selectedforQrUser.qrCode}
+                        textq={
+                          selectedUser &&
+                          selectedUser.firstName + " " + selectedUser.lastName
+                        }
+                      />
+                    }
+                    filename="FORM"
+                  >
+                    {({ loading }) =>
+                      loading ? (
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none">
+                          Downloading QR Code ...
+                        </button>
+                      ) : (
+                        <button className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none">
+                          Download QR Code
+                        </button>
+                      )
+                    }
+                  </PDFDownloadLink>
+                  {/* <PDFFile /> */}
                 </div>
               </div>
             </div>

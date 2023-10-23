@@ -165,7 +165,41 @@ const recreateQRCode = async (req, res) => {
   }
 };
 
+const getQrcode = (req, res) => {
+  const { qrCode } = req.body;
+  console.log(req.body);
+
+  userModel
+    .findOne({ qrCode: qrCode })
+    .then((result) => {
+      if (result.qrCode == null) {
+        return res.send({
+          message: "Qrcode not found",
+        });
+      }
+
+      generateNewQR(result.qrCode.toString(), (error, qrUrl) => {
+        if (error) {
+          console.error("Error generating QR code:", error);
+          res.status(500).send({ message: "Error while generating QR code" });
+        } else {
+          res
+            .status(200)
+            .send({ message: "QR code generated successfully", qrCode: qrUrl });
+        }
+      });
+    })
+    .catch((err) => {
+      // Send an error response if there's an issue with updating the user's account
+      res.send({
+        message: "Error while transaction process!",
+        error: err,
+      });
+    });
+};
+
 export default {
   recreateQRCode,
   createQRCode,
+  getQrcode,
 };

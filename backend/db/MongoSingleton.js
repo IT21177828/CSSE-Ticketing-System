@@ -1,35 +1,20 @@
-import dotenv from "dotenv";
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 
-dotenv.config();
-
-class MongoSingleton {
+// Singleton class for database connection
+class DatabaseSingleton {
   constructor() {
-    if (!MongoSingleton.instance) {
-      this.connect();
-      MongoSingleton.instance = this;
+    if (!DatabaseSingleton.instance) {
+      dotenv.config();
+      // Initialize the database connection
+      mongoose
+        .connect(process.env.ATLAS_URI)
+        .then(() => console.log("connetion to database established..."))
+        .catch((err) => console.log(err));
+      DatabaseSingleton.instance = this;
     }
-
-    return MongoSingleton.instance;
-  }
-
-  async connect() {
-    try {
-      await mongoose.connect(process.env.ATLAS_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-      console.log("MongoDB connected!ttttttttt");
-    } catch (error) {
-      console.error("Error connecting to MongoDB:", error);
-    }
-  }
-
-  async disconnect() {
-    await mongoose.disconnect();
-    console.log("MongoDB disconnected!");
+    return DatabaseSingleton.instance;
   }
 }
 
-const mongoSingleton = new MongoSingleton();
-export default mongoSingleton;
+export default new DatabaseSingleton();

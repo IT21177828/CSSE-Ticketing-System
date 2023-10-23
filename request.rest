@@ -68,12 +68,16 @@ Content-Type: application/json
 
 ###
 POST http://localhost:5050/qr/createQR
+Content-Type: application/json
+
 {
     "userID": "652956e9bfcb9bb7b3e0f263"
 }
 
 ###
 POST http://localhost:5050/qr/recreateQRCode
+Content-Type: application/json
+
 {
     "userID":"652937a69604eb52db13a375"
 }
@@ -94,4 +98,13 @@ Content-Type: application/json
     "amount":80040400980,
     "busNumber":"ND-4589",
     "conductorName":"Naveen Malshan"
+}
+
+
+###
+GET  http://localhost:5050/qr/getQrcode
+Content-Type: application/json
+
+{
+    "qrCode":"6535f61a1b2ecea496cfa440"    
 }
