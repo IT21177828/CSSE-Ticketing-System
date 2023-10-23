@@ -37,7 +37,7 @@ const BusRegistrationForm = () => {
     axios.post("http://localhost:5050/bus", busData).then((res) => {
       console.log(res);
       if (res.status === 200) {
-        window.location.href = "/card";
+        window.location.href = "/admin/card";
       } else {
         setError(res.data);
       }

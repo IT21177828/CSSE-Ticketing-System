@@ -6,14 +6,17 @@ import AssignConductorForm from "../AssignConductorForm";
 import UserSelection from "../../pages/UserSelection";
 import BusDetails from "../../pages/BusDetails";
 import BusRegistrationForm from "../BusRegistrationForm";
+import BusSchedulePage from "../BusTimetable/BusSchedulePage";
 
 const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h2>< Link to="/admin" className="admin-title">
-             Admin
-            </Link></h2>
+        <h2>
+          <Link to="/admin" className="admin-title">
+            Admin
+          </Link>
+        </h2>
         <ul>
           <li>
             <Link to="" className="sidebar-link">
@@ -31,7 +34,7 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/timetable" className="sidebar-link">
+            <Link to="timetab/" className="sidebar-link">
               View Timetables
             </Link>
           </li>
@@ -49,6 +52,7 @@ const Dashboard = () => {
           <Route path="passenger" element={<UserSelection />} />
           <Route path="card" element={<BusDetails />} />
           <Route path="busReg" element={<BusRegistrationForm />} />
+          <Route path="timeTab" element={<BusSchedulePage />} />
         </Routes>
       </div>
     </div>

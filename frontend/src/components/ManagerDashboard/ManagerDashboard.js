@@ -5,7 +5,7 @@ import AssignConductorForm from "../AssignConductorForm";
 import LandingDashboard from "./LandingDashboard";
 import UserSelection from "../../pages/UserSelection";
 import BusDetails from "../../pages/BusDetails";
-import BusSchedulePage from "../BusSchedulePage";
+import BusSchedulePage from "../BusTimetable/BusSchedulePage";
 
 const ManagerDashboard = () => {
   return (
