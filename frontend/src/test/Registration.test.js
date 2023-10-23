@@ -81,7 +81,7 @@ describe('Registration Component', () => {
     fireEvent.change(confirmPasswordInput, { target: { name: 'confirmPassword', value: 'password' } });
     fireEvent.click(submitButton);
 
-    // Wait for the form submission and redirect
+ 
     await waitFor(() => {
       const successMessage = screen.getByText('Registration successful');
       expect(successMessage).toBeInTheDocument();
@@ -106,7 +106,7 @@ describe('Registration Component', () => {
     fireEvent.change(confirmPasswordInput, { target: { name: 'confirmPassword', value: 'password' } });
     fireEvent.click(submitButton);
 
-    // Wait for the form submission and handle errors
+   
     await waitFor(() => {
       const errorMessage = screen.getByText('Registration failed');
       expect(errorMessage).toBeInTheDocument();

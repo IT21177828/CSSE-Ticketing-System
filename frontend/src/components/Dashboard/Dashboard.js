@@ -11,7 +11,9 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="sidebar">
-        <h2 className="admin-title">Admin</h2>
+        <h2>< Link to="/admin" className="admin-title">
+             Admin
+            </Link></h2>
         <ul>
           <li>
             <Link to="" className="sidebar-link">
@@ -29,8 +31,8 @@ const Dashboard = () => {
             </Link>
           </li>
           <li>
-            <Link to="/" className="sidebar-link">
-              View Manager Details
+            <Link to="/timetable" className="sidebar-link">
+              View Timetables
             </Link>
           </li>
           <li>
